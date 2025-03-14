@@ -5,6 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
+import { UserEntity } from './users/entities/users.entity';
+import { RestaurantsController } from './restaurants/restaurants.controller';
+import { RestaurantsService } from './restaurants/restaurants.service';
+import { RestaurantsModule } from './restaurants/restaurants.module';
+import { BookingsController } from './bookings/bookings.controller';
+import { BookingsService } from './bookings/bookings.service';
+import { BookingsModule } from './bookings/bookings.module';
+import { MenusController } from './menus/menus.controller';
+import { MenusService } from './menus/menus.service';
+import { MenusModule } from './menus/menus.module';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [
@@ -18,12 +29,15 @@ import { UsersModule } from './users/users.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [],
-      synchronize: false,
+      entities: [ UserEntity ],
+      synchronize: true,
     }),
-    UsersModule
+    UsersModule,
+    RestaurantsModule,
+    BookingsModule,
+    MenusModule,
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService],
+  controllers: [AppController, UsersController, RestaurantsController, BookingsController, MenusController],
+  providers: [AppService, RestaurantsService, BookingsService, MenusService, UsersService],
 })
 export class AppModule {}
