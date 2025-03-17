@@ -1,15 +1,17 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { MenuEntity } from "src/menus/entities/menus.entity";
+import { UserEntity } from "src/users/entities/users.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'bookings' })
 export class BookingEntity {
     @PrimaryGeneratedColumn()
     id: number;
     
-    @Column()
-    restaurant_id: number;
+    @ManyToOne(()=>UserEntity)
+    user: UserEntity;
 
-    @Column()
-    user_id: number;
+    @ManyToMany(()=>MenuEntity)
+    menus: MenuEntity
 
     @Column()
     bookingDate: Date;
@@ -19,7 +21,7 @@ export class BookingEntity {
 
     @Column()
     endedAt: string;
-    
+
     @Column()
     numberOfPeople: number;
 

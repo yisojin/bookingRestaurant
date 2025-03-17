@@ -6,16 +6,19 @@ export class UserEntity {
     id: number;
 
     @Column()
-    name: string;
+    userid: string;
+
+    @Column()
+    password: string;
+
+    @Column()
+    username: string;
 
     @Column()
     email: string;
 
     @Column()
     phone: string;
-
-    @Column()
-    password: string;
 
     @CreateDateColumn()
     createdAt: Date;
