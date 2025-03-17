@@ -6,12 +6,12 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToO
 export class BookingEntity {
     @PrimaryGeneratedColumn()
     id: number;
-    
-    @ManyToOne(()=>UserEntity)
-    user: UserEntity;
 
-    @ManyToMany(()=>MenuEntity)
-    menus: MenuEntity
+    @Column()
+    user_id: number;
+    
+    @Column()
+    menu_id: number;
 
     @Column()
     bookingDate: Date;

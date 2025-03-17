@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { MenuCategory } from "../enums/menus.enum";
 
-@Entity({ name: 'bookings' })
+@Entity({ name: 'menus' })
 export class MenuEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -14,8 +15,12 @@ export class MenuEntity {
     @Column()
     price: number;
 
-    @Column()
-    category: string;
+    @Column({
+        type: 'enum',
+        enum: MenuCategory,
+        default: MenuCategory.NONE
+    })
+    category: MenuCategory;
 
     @Column()
     description: string;
