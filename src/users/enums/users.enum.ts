@@ -1,4 +1,4 @@
 export enum UserType {
-    R = 'RESTARUANT',
-    U = 'USER',
+    RESTAURANT = 'RESTARUANT',
+    USER = 'USER',
 }
