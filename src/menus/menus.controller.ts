@@ -5,6 +5,7 @@ import { CreateMenuDto } from './dtos/create-menu.dto';
 import { GetUser } from 'src/auth/auth.decorator';
 import { UserEntity } from 'src/users/entities/users.entity';
 import { UserType } from 'src/users/enums/users.enum';
+import { DeleteMenuDto } from './dtos/delete-menu.dto';
 
 @Controller('menus')
 export class MenusController {
@@ -30,7 +31,9 @@ export class MenusController {
 
     @UseGuards(JwtAuthGuard)
     @Delete()
-    async deleteMenu(){
-        return await this.menuService.deleteMenu()
+    async deleteMenu(
+        @GetUser() user:UserEntity,
+        @Body() deleteMenuDto: DeleteMenuDto){
+        return await this.menuService.deleteMenu(user.id,deleteMenuDto)
     }
 }

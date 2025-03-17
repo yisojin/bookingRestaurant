@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MenuEntity } from './entities/menus.entity';
 import { Repository } from 'typeorm';
 import { CreateMenuDto } from './dtos/create-menu.dto';
+import { DeleteMenuDto } from './dtos/delete-menu.dto';
 
 @Injectable()
 export class MenusService {
@@ -22,9 +23,10 @@ export class MenusService {
         })
     }
 
-    async deleteMenu(){
+    async deleteMenu(restaurant_id,deleteMenu: DeleteMenuDto){
         return await this.menuRepository.delete({
-            
+            restaurant_id: restaurant_id,
+            name: deleteMenu.name
         })
     }
 }
