@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { MenusService } from './menus.service';
 import { JwtAuthGuard } from 'src/jwt-auth/jwt-auth.guard';
 import { CreateMenuDto } from './dtos/create-menu.dto';
@@ -6,6 +6,7 @@ import { GetUser } from 'src/auth/auth.decorator';
 import { UserEntity } from 'src/users/entities/users.entity';
 import { UserType } from 'src/users/enums/users.enum';
 import { DeleteMenuDto } from './dtos/delete-menu.dto';
+import { GetMenuDto } from './dtos/get-menu.dto';
 
 @Controller('menus')
 export class MenusController {
@@ -16,6 +17,12 @@ export class MenusController {
     @Get()
     async getMenus(){
         return await this.menuService.getAllMenus();
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('search')
+    async getMenuForSearch(@Query() getMenuDto: GetMenuDto){
+        return await this.menuService.getMenuForSearch(getMenuDto);
     }
 
     @UseGuards(JwtAuthGuard)
