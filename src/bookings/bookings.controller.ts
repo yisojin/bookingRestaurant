@@ -6,20 +6,26 @@ import { UserEntity } from 'src/users/entities/users.entity';
 import { CreateBookingDto } from './dtos/create-booking.dto';
 import { MenusService } from 'src/menus/menus.service';
 import { GetBookingDto } from './dtos/get-booking.dto';
+import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { BookingEntity } from './entities/booking.entity';
 
 @Controller('bookings')
 export class BookingsController {
 
     constructor(private bookingService: BookingsService, private menuService: MenusService){}
 
+    @ApiOperation({summary:'예약조회'})
+    // @ApiQuery({
+    //     name: 'name',
+    //     enum: ['enum1', 'enum2'],
+    //   })
     @UseGuards(JwtAuthGuard)
     @Get()
-    async getAllBooking(@GetUser() user:UserEntity, @Query() getBookingDto: GetBookingDto){
+    async getBooking(@GetUser() user:UserEntity, @Query() getBookingDto: GetBookingDto){
         return await this.bookingService.getAllBooking(user, getBookingDto);
     }
 
-
-
+    @ApiOperation({summary:'예약등록'})
     @UseGuards(JwtAuthGuard)
     @Post()
     async createBooking(
@@ -40,6 +46,7 @@ export class BookingsController {
         return await this.bookingService.createBooking(user,menus,createBookingDto)
     }
 
+    @ApiOperation({summary:'예약수정'})
     @UseGuards(JwtAuthGuard)
     @Put(':id')
     async updateBooking(
@@ -51,6 +58,7 @@ export class BookingsController {
         return await this.bookingService.updateBooking(id, user, updateBookingDto, menus);
     }
 
+    @ApiOperation({summary:'예약삭제'})
     @UseGuards(JwtAuthGuard)
     @Delete(':id')
     async deleteBooking(

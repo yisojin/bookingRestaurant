@@ -6,9 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { UserEntity } from './users/entities/users.entity';
-import { RestaurantsController } from './restaurants/restaurants.controller';
-import { RestaurantsService } from './restaurants/restaurants.service';
-import { RestaurantsModule } from './restaurants/restaurants.module';
 import { BookingsController } from './bookings/bookings.controller';
 import { BookingsService } from './bookings/bookings.service';
 import { BookingsModule } from './bookings/bookings.module';
@@ -39,12 +36,11 @@ import { AuthController } from './auth/auth.controller';
       synchronize:true,
     }),
     UsersModule,
-    RestaurantsModule,
     BookingsModule,
     MenusModule,
     AuthModule,
   ],
-  controllers: [AppController, UsersController, RestaurantsController, BookingsController, MenusController, AuthController],
-  providers: [AppService, RestaurantsService, BookingsService, MenusService, UsersService, AuthService, JwtService],
+  controllers: [AppController, UsersController, BookingsController, MenusController, AuthController],
+  providers: [AppService, BookingsService, MenusService, UsersService, AuthService, JwtService],
 })
 export class AppModule {}
