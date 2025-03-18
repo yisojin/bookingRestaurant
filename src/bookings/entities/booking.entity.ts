@@ -1,6 +1,6 @@
 import { MenuEntity } from "src/menus/entities/menus.entity";
 import { UserEntity } from "src/users/entities/users.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'bookings' })
 export class BookingEntity {
@@ -8,19 +8,28 @@ export class BookingEntity {
     id: number;
 
     @Column()
-    user_id: number;
-    
-    @Column()
-    menu_id: number;
+    restaurant: string;
+
+    @ManyToOne(() => UserEntity, (user) => user.bookings)
+    @JoinColumn({ name: 'userId' })
+    user: UserEntity;
+
+    @ManyToMany(() => MenuEntity, (menu) => menu.bookings)
+    @JoinTable({
+    name: 'booking_menus',
+    joinColumn: { name: 'bookingId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'menuId', referencedColumnName: 'id' },
+    })
+    menus: MenuEntity[];
 
     @Column()
     bookingDate: Date;
 
     @Column()
-    startedAt: string;
+    startedAt: Date;
 
     @Column()
-    endedAt: string;
+    endedAt: Date;
 
     @Column()
     numberOfPeople: number;

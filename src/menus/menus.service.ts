@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MenuEntity } from './entities/menus.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateMenuDto } from './dtos/create-menu.dto';
 import { DeleteMenuDto } from './dtos/delete-menu.dto';
 import { GetMenuDto } from './dtos/get-menu.dto';
@@ -44,8 +44,16 @@ export class MenusService {
 
     async deleteMenu(restaurant_id,deleteMenu: DeleteMenuDto){
         return await this.menuRepository.delete({
-            restaurant_id: restaurant_id,
+            restaurant:{
+                id: restaurant_id
+            } ,
             name: deleteMenu.name
         })
+    }
+
+    async getMenusByIds(menuIds: number[]){
+        return await this.menuRepository.find({
+            where:{ id: In(menuIds)},
+        });
     }
 }

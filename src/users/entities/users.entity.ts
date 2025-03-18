@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { UserType } from "../enums/users.enum";
+import { MenuEntity } from "src/menus/entities/menus.entity";
+import { BookingEntity } from "src/bookings/entities/booking.entity";
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -37,4 +39,12 @@ export class UserEntity {
 
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @OneToMany(() => BookingEntity, (booking) => booking.user)
+    bookings: BookingEntity[];
+
+
+    @OneToMany(() => MenuEntity, (menu) => menu.restaurant)
+    menus: MenuEntity[];
+
 }

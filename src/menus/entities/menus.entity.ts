@@ -1,13 +1,16 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 import { MenuCategory } from "../enums/menus.enum";
+import { BookingEntity } from "src/bookings/entities/booking.entity";
+import { UserEntity } from "src/users/entities/users.entity";
 
 @Entity({ name: 'menus' })
 export class MenuEntity {
     @PrimaryGeneratedColumn()
     id: number;
     
-    @Column()
-    restaurant_id: number;
+    @ManyToOne(() => UserEntity, (user) => user.menus)
+    @JoinColumn({ name: 'restaurant_id' })
+    restaurant: UserEntity;
 
     @Column()
     name: string;
@@ -33,4 +36,8 @@ export class MenuEntity {
 
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @OneToMany(() => BookingEntity, (booking) => booking.menus)
+    bookings: BookingEntity[];
+    
 }
