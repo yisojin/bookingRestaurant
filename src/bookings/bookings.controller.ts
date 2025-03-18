@@ -1,10 +1,11 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { JwtAuthGuard } from 'src/jwt-auth/jwt-auth.guard';
 import { GetUser } from 'src/auth/auth.decorator';
 import { UserEntity } from 'src/users/entities/users.entity';
 import { CreateBookingDto } from './dtos/create-booking.dto';
 import { MenusService } from 'src/menus/menus.service';
+import { GetBookingDto } from './dtos/get-booking.dto';
 
 @Controller('bookings')
 export class BookingsController {
@@ -13,9 +14,11 @@ export class BookingsController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    async getAllBooking(@GetUser() user:UserEntity){
-        return await this.bookingService.getAllBooking(user);
+    async getAllBooking(@GetUser() user:UserEntity, @Query() getBookingDto: GetBookingDto){
+        return await this.bookingService.getAllBooking(user, getBookingDto);
     }
+
+
 
     @UseGuards(JwtAuthGuard)
     @Post()

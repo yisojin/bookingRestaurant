@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from 'src/users/entities/users.entity';
 import { CreateBookingDto } from './dtos/create-booking.dto';
 import { MenuEntity } from 'src/menus/entities/menus.entity';
+import { UserType } from 'src/users/enums/users.enum';
 
 @Injectable()
 export class BookingsService {
@@ -14,14 +15,29 @@ export class BookingsService {
         private readonly bookingRepository: Repository<BookingEntity>
     ){}
 
-    async getAllBooking(user:UserEntity){
-        return await this.bookingRepository.find({ 
-            relations: ['menus'],
-            where: {
-            user: {
-                id: user.id
-            }
-        }})
+    async getAllBooking(user:UserEntity, getBookingDto){
+        const queryBuilder = this.bookingRepository.createQueryBuilder('bookings');
+        
+        if(getBookingDto.phone){
+            queryBuilder.andWhere('bookings.phone like :phone', {phone: `%${getBookingDto.phone}%`});
+        }
+        if(getBookingDto.date){
+            queryBuilder.andWhere('booking.bookingDate between :date and :date2', {date: getBookingDto.date+' 00:00:00', date2: getBookingDto.date+' 23:59:59'});
+        }
+        if(getBookingDto.numberOfPeople){
+            queryBuilder.andWhere('bookings.numberOfPeople <= :number', {number: getBookingDto.numberOfPeople});
+        }
+        if(getBookingDto.menu){
+            queryBuilder.innerJoin('bookings.menus','menus').where('menus.name like :name',{name: `%${getBookingDto.menu}%`})
+        }
+        if(user.userType === UserType.RESTAURANT){
+            queryBuilder.andWhere('bookings.restaurant = :restaurant',{restaurant: user.username});
+        }
+        if(user.userType === UserType.USER){
+            queryBuilder.andWhere('bookings.userID = :id',{id: user.id});
+        }
+        return await queryBuilder.getMany()
+
     }
 
     async createBooking(user:UserEntity,menus:MenuEntity[],createBookingDto: CreateBookingDto){
