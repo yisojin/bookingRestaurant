@@ -2,12 +2,11 @@ import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Q
 import { BookingsService } from './bookings.service';
 import { JwtAuthGuard } from 'src/jwt-auth/jwt-auth.guard';
 import { GetUser } from 'src/auth/auth.decorator';
-import { UserEntity } from 'src/users/entities/users.entity';
-import { CreateBookingDto } from './dtos/create-booking.dto';
+import { UserEntity } from 'src/entity/users.entity';
 import { MenusService } from 'src/menus/menus.service';
-import { GetBookingDto } from './dtos/get-booking.dto';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { BookingEntity } from './entities/booking.entity';
+import { BookingEntity } from '../entity/booking.entity';
+import { CreateBookingDto, GetBookingDto } from './dtos';
 
 @Controller('bookings')
 export class BookingsController {

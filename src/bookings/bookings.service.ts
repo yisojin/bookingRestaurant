@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BookingEntity } from './entities/booking.entity';
+import { BookingEntity } from '../entity/booking.entity';
 import { Repository } from 'typeorm';
-import { UserEntity } from 'src/users/entities/users.entity';
-import { CreateBookingDto } from './dtos/create-booking.dto';
-import { MenuEntity } from 'src/menus/entities/menus.entity';
-import { UserType } from 'src/users/enums/users.enum';
+import { UserEntity } from 'src/entity/users.entity';
+import { MenuEntity } from 'src/entity/menus.entity';
+import { UserType } from 'src/users/enums';
+import { CreateBookingDto } from './dtos';
 
 @Injectable()
 export class BookingsService {

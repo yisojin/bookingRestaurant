@@ -1,12 +1,10 @@
 import { Body, Controller, Delete, Get, Post, Query, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { MenusService } from './menus.service';
 import { JwtAuthGuard } from 'src/jwt-auth/jwt-auth.guard';
-import { CreateMenuDto } from './dtos/create-menu.dto';
 import { GetUser } from 'src/auth/auth.decorator';
-import { UserEntity } from 'src/users/entities/users.entity';
-import { UserType } from 'src/users/enums/users.enum';
-import { DeleteMenuDto } from './dtos/delete-menu.dto';
-import { GetMenuDto } from './dtos/get-menu.dto';
+import { UserEntity } from 'src/entity/users.entity';
+import { UserType } from 'src/users/enums';
+import { CreateMenuDto, DeleteMenuDto, GetMenuDto } from './dtos';
 
 @Controller('menus')
 export class MenusController {

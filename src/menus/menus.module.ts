@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MenuEntity } from './entities/menus.entity';
+import { MenuEntity } from '../entity/menus.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MenusService } from './menus.service';
 

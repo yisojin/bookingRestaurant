@@ -1,5 +1,5 @@
-import { MenuEntity } from "src/menus/entities/menus.entity";
-import { UserEntity } from "src/users/entities/users.entity";
+import { MenuEntity } from "src/entity/menus.entity";
+import { UserEntity } from "src/entity/users.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'bookings' })

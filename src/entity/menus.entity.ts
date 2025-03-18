@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
-import { MenuCategory } from "../enums/menus.enum";
-import { BookingEntity } from "src/bookings/entities/booking.entity";
-import { UserEntity } from "src/users/entities/users.entity";
+import { BookingEntity } from "src/entity/booking.entity";
+import { UserEntity } from "src/entity/users.entity";
+import { MenuCategory } from "src/menus/enums";
 
 @Entity({ name: 'menus' })
 export class MenuEntity {

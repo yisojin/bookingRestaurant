@@ -8,7 +8,7 @@ import { JwtStrategy } from 'src/jwt-auth/jwt.strategy';
 import { LocalStrategy } from 'src/jwt-auth/local.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from 'src/users/entities/users.entity';
+import { UserEntity } from 'src/entity/users.entity';
 import { UsersService } from 'src/users/users.service';
 import * as dotenv from 'dotenv';
 

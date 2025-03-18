@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { UserType } from "../enums/users.enum";
-import { MenuEntity } from "src/menus/entities/menus.entity";
-import { BookingEntity } from "src/bookings/entities/booking.entity";
+import { UserType } from "../users/enums";
+import { MenuEntity } from "src/entity/menus.entity";
+import { BookingEntity } from "src/entity/booking.entity";
 
 @Entity({ name: 'users' })
 export class UserEntity {
