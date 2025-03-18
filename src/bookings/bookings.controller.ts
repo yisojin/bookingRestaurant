@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { JwtAuthGuard } from 'src/jwt-auth/jwt-auth.guard';
 import { GetUser } from 'src/auth/auth.decorator';
@@ -35,5 +35,25 @@ export class BookingsController {
         }
         const menus = await this.menuService.getMenusByIds(createBookingDto.menuIds);
         return await this.bookingService.createBooking(user,menus,createBookingDto)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put(':id')
+    async updateBooking(
+        @GetUser() user:UserEntity,
+        @Param('id') id: number,
+        @Body() updateBookingDto: CreateBookingDto 
+    ){
+        const menus = await this.menuService.getMenusByIds(updateBookingDto.menuIds);
+        return await this.bookingService.updateBooking(id, user, updateBookingDto, menus);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete(':id')
+    async deleteBooking(
+        @GetUser() user: UserEntity,
+        @Param('id') id:number 
+    ){
+        return await this.bookingService.deleteBooking(id, user);
     }
 }

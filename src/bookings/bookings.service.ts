@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookingEntity } from './entities/booking.entity';
 import { Repository } from 'typeorm';
@@ -36,5 +36,38 @@ export class BookingsService {
         queryBuilder.andWhere('bookings.restaurant = :restaurant', {restaurant: createBookingDto.restaurant});
         queryBuilder.andWhere('bookings.startedAt <= :startedAt and bookings.endedAt >= :startedAt', {startedAt:createBookingDto.startedAt});
         return queryBuilder.getCount();
+    }
+
+    async updateBooking(id, user, updateBookingDto, menus){
+        const booking = await this.bookingRepository.findOne({ 
+            where:
+                [{
+                    id: id
+                }, 
+                {
+                    user: user
+                }]
+            });
+
+        if (!booking) {
+            throw new NotFoundException('예약을 찾을수없습니다.');
+        }
+
+        return await this.bookingRepository.save({
+            user,menus,...updateBookingDto
+        });
+    
+    }
+
+    async deleteBooking(id, user){
+        const booking = await this.bookingRepository.findOne({ where: { id } });
+
+        if (!user) {
+            throw new NotFoundException('예약을 찾을수없습니다.');
+        }
+    
+        return await this.bookingRepository.delete({
+            id:id
+        });
     }
 }
